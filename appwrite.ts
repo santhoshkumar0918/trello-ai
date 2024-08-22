@@ -7,3 +7,5 @@ const client = new Client()
 const account = new Account(client);
 const databases = new Databases(client);
 const storage = new Storage(client);
+
+export { Client, Databases, Account, Storage, ID };
