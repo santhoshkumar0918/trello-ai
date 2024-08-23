@@ -1,16 +1,17 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
-interface BoardState{
+interface BoardState {
   board: Board;
-  getBoard:() => void
+  getBoard: () => void;
 }
 
-
-const useBoardStore = create<BoardState>((set) => {
+const useBoardStore = create<BoardState>((set) => ({
   board: {
-   columns : new Map<Typecolumn,Column>  
+    columns: new Map<TypeColumn, Column>(),
   },
   getBoard: async () => {
-    const board =  await fetch()
-  }
-})
+    const board = await getTodosGroupedByColumn();
+  },
+}));
+
+export default useBoardStore;

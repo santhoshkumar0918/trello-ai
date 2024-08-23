@@ -1,10 +1,23 @@
 interface Board {
-    columns: Map<TypeColumn, Column>;
+  columns: Map<TypeColumn, Column>;
 }
 
-Type TypeColumn = "todo" | "inprogess" | "done";
+type TypeColumn = "todo" | "inprogess" | "done";
 
 interface Column {
-    id: TypedColumn;
-    todos:todo
+  id: TypeColumn;
+  todos: Todo[];
+}
+
+interface todo {
+  $id: string;
+  $createdAt: string;
+  title: string;
+  status: TypeColumn;
+  image?: Image;
+}
+
+interface Image {
+  bucketId: string;
+  fileId: string;
 }
