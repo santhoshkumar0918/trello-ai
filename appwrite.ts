@@ -6,14 +6,7 @@ const client = new Client()
 
 const account = new Account(client);
 const databases = new Databases(client);
-const promise = databases.createDocument(
-  "<DATABASE_ID>",
-  "[COLLECTION_ID]",
-  ID.unique(),
-  {}
-);
 
 const storage = new Storage(client);
 
-export { Client,Databases, Account, Storage, ID };
-
+export { client, databases, account, storage, ID };

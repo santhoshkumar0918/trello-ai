@@ -1,5 +1,6 @@
 "use client";
 
+import useBoardStore from "@/store/BoardStore";
 import React, { useEffect } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
@@ -9,31 +10,13 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 //   };
 
 function Board() {
-  const board: React.FC = () => {
-    const onDragEnd = (result: any) => {
-      console.log(result);
-    };
+  const getboard = useBoardStore((state) => state.getBoard);
 
-    useEffect(() => {}, []);
+  useEffect(() => {
+    getboard();
+  }, [getboard]);
 
-    return (
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="board-1" direction="horizontal" type="column">
-          {(provided) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className="flex"
-            >
-              {/* Your draggable items will go here */}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-        <div>Drag and drop items here</div>
-      </DragDropContext>
-    );
-  };
+  return <h1>Hello</h1>;
 }
 
 export default Board;
