@@ -74,6 +74,7 @@ function Header() {
           width={300}
           height={100}
           className="w-44 md:w-56 pb-10 md:pb-0 object-contain"
+          priority
         />
         <div className="flex flex-col md:flex-row items-center space-y-3 md:space-y-0  md:space-x-5 justify-end w-full">
           {/* search box */}
