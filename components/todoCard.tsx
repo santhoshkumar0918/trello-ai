@@ -23,12 +23,14 @@ function TodoCard({
 }: props) {
   return (
     <div
-      className="bg-white rounded-md drop-shadow-md space-y-2"
+      className="bg-white rounded-md drop-shadow-md space-y-2 "
       {...draggbleProps}
       {...dragHandleProps}
       ref={innerRef}
     >
-      Hello
+      <div>
+        <p>{todo.title}</p>
+      </div>
     </div>
   );
 }
