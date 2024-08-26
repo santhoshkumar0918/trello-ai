@@ -54,18 +54,58 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import Column from "./Column";
 
 function Board() {
-  const [board, getBoard] = useBoardStore((state) => [
+  const [board, getBoard, setBoardState] = useBoardStore((state) => [
     state.board,
     state.getBoard,
+    state.setBoardState,
   ]);
 
   useEffect(() => {
     getBoard();
   }, [getBoard]);
 
+  // const handleOnDragEnd = (result: DropResult) => {
+  //   const { destination, source, type } = result;
+  //   // to check if user drag the card outsied of the board
+  //   if (!destination) return;
+  //   // handle the column
+  //   if (type === "column") {
+  //     const entries = Array.from(board.columns.entries());
+  //     const [removed] = entries.splice(source.index, 1);
+  //     entries.splice(destination.index, 0, removed);
+  //     const reArrangedColumns = new Map(entries);
+  //   setBoardState({
+  //     ...board,
+  //     columns: reArrangedColumns,
+  //   });
+  // }
+  // };
   const handleOnDragEnd = (result: DropResult) => {
-    // Your logic for handling drag and drop result
-    console.log(result);
+    const { destination, source, type } = result;
+
+    // Return early if the user drags the item outside of any droppable area
+    if (!destination) return;
+
+    // Handle column dragging
+    if (type === "column") {
+      // Get the current columns as an array
+      const entries = Array.from(board.columns.entries());
+
+      // Remove the dragged column from its source position
+      const [removed] = entries.splice(source.index, 1);
+
+      // Insert the dragged column into its new destination position
+      entries.splice(destination.index, 0, removed);
+
+      // Convert the array back to a Map and set the new board state
+      const reArrangedColumns = new Map(entries);
+
+      // Use a functional update to avoid creating unnecessary re-renders
+      setBoardState({
+        ...board,
+        columns: reArrangedColumns,
+      });
+    }
   };
 
   return (

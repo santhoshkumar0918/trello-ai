@@ -1,6 +1,6 @@
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import TodoCard from "./todoCard";
+import TodoCard from "./TodoCard";
 
 type Props = {
   id: TypedColumn;
@@ -24,7 +24,7 @@ function Column({ id, todos, index }: Props) {
           ref={provided.innerRef}
         >
           {/* Render droppable todos in the columns */}
-          <Droppable droppableId={id} type="card">
+          <Droppable droppableId="id-1" type="card">
             {(provided, snapshot) => (
               <div
                 {...provided.droppableProps}
@@ -68,10 +68,11 @@ function Column({ id, todos, index }: Props) {
                   {provided.placeholder}
                 </div>
                 <div className="flex items-end justify-end p-2 ">
-                  <button className="text-green-500 hover:text-green-600">
+                  <button className="text-green-400 hover:text-green-600">
                     <PlusCircleIcon className="h-10 w-10" />
                   </button>
                 </div>
+                {/* {add image url later} */}
               </div>
             )}
           </Droppable>
