@@ -5,7 +5,7 @@ import { todo } from "node:test";
 
 type Props = {
   id: TypedColumn;
-  todos: todo[];
+  todos: Todo[];
   index: number;
 };
 
