@@ -6,6 +6,7 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import Column from "./Column";
 import { start } from "repl";
 import { todo } from "node:test";
+// import {board} from '@/store/BoardStore'
 
 function Board() {
   const [board, getBoard, setBoardState] = useBoardStore((state) => [
@@ -20,35 +21,41 @@ function Board() {
 
   const handleOnDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
-    // to check if user drag the card outs of the board
+    // check if user dragged card outside of board
     if (!destination) return;
-    // handle the column
+
     if (type === "column") {
       const entries = Array.from(board.columns.entries());
       const [removed] = entries.splice(source.index, 1);
       entries.splice(destination.index, 0, removed);
-      const reArrangedColumns = new Map(entries);
+      const rearrangedColumns = new Map(entries);
       setBoardState({
         ...board,
-        columns: reArrangedColumns,
+        columns: rearrangedColumns,
       });
     }
-    const columns = Array.from(board.columns);
-    const startColumn = columns[Number(source.droppableId)];
-    const endColumn = columns[Number(destination.droppableId)];
 
-    // const startCol: Column = {
-    //   id: startColumn[0],
-    //   todos: startColumn[1].todos,
-    // };
+    // This step is needed as the indexes are stored as numbers 0,1,2 etc , instead of id's with DND library
+    const columns = Array.from(board.columns.entries());
+    const startColIndex: [TypedColumn, Column] | undefined =
+      columns[Number(source.index)];
+    const finishColIndex: [TypedColumn, Column] | undefined =
+      columns[Number(destination.index)];
 
-    // console.log("columns : ", columns);
-    console.log(source.droppableId);
+    const startCol: Column = {
+      id: startColIndex[0],
+      todos: startColIndex[1].todos,
+    };
+    const finishCol: Column = {
+      id: finishColIndex[0],
+      todos: finishColIndex[1].todos,
+    };
+    console.log(startCol, finishCol);
   };
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <Droppable droppableId="hello-1" direction="horizontal" type="group">
+      <Droppable droppableId="hello2-1" direction="horizontal" type="column">
         {(provided) => (
           <div
             className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-7xl mx-auto p-2"

@@ -1,3 +1,5 @@
+"use client";
+
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import {
@@ -6,7 +8,7 @@ import {
 } from "react-beautiful-dnd";
 
 type props = {
-  todo: todo;
+  todo: Todo;
   index: number;
   id: TypedColumn;
   innerRef: (element: HTMLElement | null) => void;

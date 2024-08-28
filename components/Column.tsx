@@ -61,12 +61,13 @@ function Column({ id, todos, index }: Props) {
                   ))}
 
                   {provided.placeholder}
+                  <div className="flex items-end justify-end p-2 ">
+                    <button className="text-green-400 hover:text-green-600">
+                      <PlusCircleIcon className="h-10 w-10" />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-end justify-end p-2 ">
-                  <button className="text-green-400 hover:text-green-600">
-                    <PlusCircleIcon className="h-10 w-10" />
-                  </button>
-                </div>
+
                 {/* {add image url later} */}
               </div>
             )}
