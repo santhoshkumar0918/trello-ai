@@ -11,7 +11,7 @@ interface Column {
   todos: Todo[];
 }
 
-interface Todo {
+interface todo {
   $id: string;
   $createdAt: string;
   title: string;

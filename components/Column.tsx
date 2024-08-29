@@ -2,10 +2,11 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import TodoCard from "./TodoCard";
 import { todo } from "node:test";
+import useBoardStore from "@/store/BoardStore";
 
 type Props = {
   id: TypedColumn;
-  todos: Todo[];
+  todos: todo[];
   index: number;
 };
 
@@ -16,6 +17,7 @@ const todoColumnsText: { [key in TypedColumn]: string } = {
 };
 
 function Column({ id, todos, index }: Props) {
+  const [searchString] = useBoardStore((state) => [state.searchString]);
   return (
     <Draggable draggableId={id.toString()} index={index}>
       {(provided) => (
@@ -41,24 +43,32 @@ function Column({ id, todos, index }: Props) {
                   </span>
                 </h2>
                 <div className="space-y-2">
-                  {todos.map((todo, index) => (
-                    <Draggable
-                      key={todo.$id} // Ensure each Draggable has a unique key
-                      draggableId={todo.$id}
-                      index={index} // Ensure index is unique and consecutive
-                    >
-                      {(provided) => (
-                        <TodoCard
-                          todo={todo}
-                          id={id}
-                          index={index}
-                          innerRef={provided.innerRef}
-                          draggbleProps={provided.draggableProps}
-                          dragHandleProps={provided.dragHandleProps}
-                        />
-                      )}
-                    </Draggable>
-                  ))}
+                  {todos.map((todo, index) => {
+                    if (
+                      searchString &&
+                      !todo.title
+                        .toLowerCase()
+                        .includes(searchString.toLowerCase())
+                    )
+                      return (
+                        <Draggable
+                          key={todo.$id} // Ensure each Draggable has a unique key
+                          draggableId={todo.$id}
+                          index={index} // Ensure index is unique and consecutive
+                        >
+                          {(provided) => (
+                            <TodoCard
+                              todo={todo}
+                              id={id}
+                              index={index}
+                              innerRef={provided.innerRef}
+                              draggbleProps={provided.draggableProps}
+                              dragHandleProps={provided.dragHandleProps}
+                            />
+                          )}
+                        </Draggable>
+                      );
+                  })}
 
                   {provided.placeholder}
                   <div className="flex items-end justify-end p-2 ">
