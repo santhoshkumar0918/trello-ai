@@ -8,9 +8,10 @@ interface BoardState {
   board: Board;
   getBoard: () => void;
   setBoardState: (board: Board) => void;
-  todoUpdateInDb: (todo: todo, columnId: TypedColumn) => void;
+  todoUpdateInDb: (todo: Todo, columnId: TypedColumn) => void;
   searchString: string;
-  setSearchString: (searchString: string) => any;
+  setSearchString: (searchString: string) => void;
+  deleteTask: (taskIndex: number, todoId: Todo, id: TypedColumn) => void;
 }
 
 const useBoardStore = create<BoardState>((set) => ({
@@ -19,6 +20,11 @@ const useBoardStore = create<BoardState>((set) => ({
   },
   searchString: "",
   setSearchString: (searchString) => set({ searchString }),
+
+  deleteTask: async (taskIndex: number, todo: Todo, id: TypedColumn) => {
+    const newColumns = new Map(get().board.columns);
+    newColumns.get(id)?.todos.splice(taskIndex, 1);
+  },
   getBoard: async () => {
     const board = await getTodosGroupedByColumns();
     set({ board });
