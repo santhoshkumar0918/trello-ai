@@ -6,7 +6,7 @@ import useBoardStore from "@/store/BoardStore";
 
 type Props = {
   id: TypedColumn;
-  todos: todo[];
+  todos: Todo[];
   index: number;
 };
 
